@@ -4,12 +4,15 @@ const PORT = 8080;
 const mongoose = require("mongoose");
 const Listing = require("./models/listing.js");
 const path = require("path");
+const methodOverride = require("method-override");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+app.use(methodOverride("_method"));
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
@@ -77,6 +80,24 @@ app.post("/listings", async (req, res) => {
   let newListing = new Listing(req.body.listing);
   await newListing.save();
   res.redirect("/listings");
+});
+
+// EDIT ROUTE
+
+app.get("/listings/:id/edit", async (req, res) => {
+  let { id } = req.params;
+  let listing = await Listing.findById(id);
+  res.render("listings/edit.ejs", { listing });
+});
+
+// UPDATE ROUTE
+
+app.put("/listings/:id", async (req, res) => {
+  let { id } = req.params;
+  const listing = req.body.listing;
+  console.log(listing);
+  await Listing.findByIdAndUpdate(id, { ...listing });
+  res.redirect(`/listings/${id}`);
 });
 
 // SHOW ROUTE
