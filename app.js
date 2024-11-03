@@ -104,7 +104,8 @@ app.put("/listings/:id", async (req, res) => {
 
 app.delete("/listings/:id", async (req, res) => {
   let { id } = req.params;
-  await Listing.findByIdAndDelete(id);
+  let deletedListing = await Listing.findByIdAndDelete(id);
+  console.log(deletedListing);
   res.redirect("/listings");
 });
 
