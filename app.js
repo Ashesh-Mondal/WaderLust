@@ -53,6 +53,32 @@ app.get("/listings", async (req, res) => {
   res.render("listings/index.ejs", { allListings });
 });
 
+// NEW ROUTE
+
+app.get("/listings/new", (req, res) => {
+  res.render("listings/new.ejs");
+});
+
+// CREATE ROUTE
+
+app.post("/listings", async (req, res) => {
+  // Way 1
+  // let { title, description, image, price, location, country } = req.body;
+  // let newListing = new Listing({
+  //   title,
+  //   description,
+  //   price,
+  //   location,
+  //   country,
+  // });
+  // await newListing.save();
+
+  // Way 2
+  let newListing = new Listing(req.body.listing);
+  await newListing.save();
+  res.redirect("/listings");
+});
+
 // SHOW ROUTE
 
 app.get("/listings/:id", async (req, res) => {
