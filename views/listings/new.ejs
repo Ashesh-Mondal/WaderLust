@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>WanderLust</title>
-  </head>
-  <body>
-    <form method="POST" action="/listings">
-      <!-- Way 1 -->
+<%- layout("/layouts/boilerplate.ejs") %>
+<body>
+  <form method="POST" action="/listings">
+    <!-- Way 1 -->
 
-      <!-- <input type="text" name="title" placeholder="Enter Title" />
+    <!-- <input type="text" name="title" placeholder="Enter Title" />
       <br /><br />
       <textarea
         name="description"
@@ -27,34 +21,29 @@
       <input type="text" name="country" placeholder="Enter Country" />
       <br /><br /> -->
 
-      <!-- Way 2 -->
+    <!-- Way 2 -->
 
-      <input type="text" name="listing[title]" placeholder="Enter Title" />
-      <br /><br />
-      <textarea
-        name="listing[description]"
-        rows="10"
-        cols="50"
-        placeholder="Enter Description"
-      ></textarea>
-      <br /><br />
-      <input
-        type="text"
-        name="listing[image]"
-        placeholder="Enter Image URL/Link"
-      />
-      <br /><br />
-      <input type="number" name="listing[price]" placeholder="Enter Price" />
-      <br /><br />
-      <input
-        type="text"
-        name="listing[location]"
-        placeholder="Enter Location"
-      />
-      <br /><br />
-      <input type="text" name="listing[country]" placeholder="Enter Country" />
-      <br /><br />
-      <button>Add</button>
-    </form>
-  </body>
-</html>
+    <input type="text" name="listing[title]" placeholder="Enter Title" />
+    <br /><br />
+    <textarea
+      name="listing[description]"
+      rows="10"
+      cols="50"
+      placeholder="Enter Description"
+    ></textarea>
+    <br /><br />
+    <input
+      type="text"
+      name="listing[image]"
+      placeholder="Enter Image URL/Link"
+    />
+    <br /><br />
+    <input type="number" name="listing[price]" placeholder="Enter Price" />
+    <br /><br />
+    <input type="text" name="listing[location]" placeholder="Enter Location" />
+    <br /><br />
+    <input type="text" name="listing[country]" placeholder="Enter Country" />
+    <br /><br />
+    <button>Add</button>
+  </form>
+</body>
