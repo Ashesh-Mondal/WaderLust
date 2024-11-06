@@ -1,6 +1,6 @@
-/* body {
-  background-color: aliceblue;
-} */
+body {
+  font-family: "Plus Jakarta Sans", sans-serif !important;
+}
 
 /* Navbar */
 .navbar {
@@ -48,6 +48,31 @@
   text-decoration: underline;
 }
 
-.fa-brands{
+.fa-brands {
   padding: 0rem 1rem;
+}
+
+/* Cards */
+
+.card {
+  border: none !important;
+  margin-bottom: 2rem;
+  border-radius: 0.5rem;
+}
+
+.card-img {
+  border-radius: 1rem !important;
+  box-sizing: border-box !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  overflow: hidden !important;
+  width: 100% !important;
+}
+
+.card-body {
+  padding: 0 !important;
+}
+
+.card-text p {
+  font-weight: 400 !important;
 }
