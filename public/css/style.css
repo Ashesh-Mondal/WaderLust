@@ -109,3 +109,10 @@ body {
   border: none !important;
   margin-top: 1rem !important;
 }
+
+/* Edit Page */
+
+.edit-btn {
+  background-color: #fe424d !important;
+  border: none !important;
+}
