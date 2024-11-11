@@ -131,3 +131,9 @@ body {
   justify-content: center;
   gap: 2rem;
 }
+
+/* Error Page */
+
+.alert-danger {
+  padding-top: 1.5rem !important;
+}
