@@ -6,6 +6,7 @@ const Listing = require("./models/listing.js");
 const path = require("path");
 const methodOverride = require("method-override");
 const ejsMate = require("ejs-mate");
+const wrapAsync = require("./utils/wrapAsync.js");
 
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
@@ -69,23 +70,26 @@ app.get("/listings/new", (req, res) => {
 
 // CREATE ROUTE
 
-app.post("/listings", async (req, res) => {
-  // Way 1
-  // let { title, description, image, price, location, country } = req.body;
-  // let newListing = new Listing({
-  //   title,
-  //   description,
-  //   price,
-  //   location,
-  //   country,
-  // });
-  // await newListing.save();
+app.post(
+  "/listings",
+  wrapAsync(async (req, res) => {
+    // Way 1
+    // let { title, description, image, price, location, country } = req.body;
+    // let newListing = new Listing({
+    //   title,
+    //   description,
+    //   price,
+    //   location,
+    //   country,
+    // });
+    // await newListing.save();
 
-  // Way 2
-  let newListing = new Listing(req.body.listing);
-  await newListing.save();
-  res.redirect("/listings");
-});
+    // Way 2
+    let newListing = new Listing(req.body.listing);
+    await newListing.save();
+    res.redirect("/listings");
+  })
+);
 
 // EDIT ROUTE
 
@@ -120,4 +124,8 @@ app.get("/listings/:id", async (req, res) => {
   let { id } = req.params;
   let listing = await Listing.findById(id);
   res.render("listings/show.ejs", { listing });
+});
+
+app.use((err, req, res, next) => {
+  res.send("Something went wrong");
 });
