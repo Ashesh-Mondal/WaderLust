@@ -40,6 +40,16 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
+const validateListing = (req, res, next) => {
+  let { error } = listingSchema.validate(req.body.listing);
+  if (error) {
+    let errMsg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(400, errMsg);
+  } else {
+    next();
+  }
+};
+
 app.get("/", (req, res) => {
   res.send("Hi! I am Root");
 });
@@ -77,11 +87,9 @@ app.get("/listings/new", (req, res) => {
 
 app.post(
   "/listings",
+  validateListing,
   wrapAsync(async (req, res, next) => {
     // Way 1
-    // if (!req.body) {
-    //   next(new ExpressError(400, "Send valid data to create a listing"));
-    // }
     // let { title, description, image, price, location, country } = req.body;
     // let newListing = new Listing({
     //   title,
@@ -119,11 +127,10 @@ app.get(
 
 app.put(
   "/listings/:id",
+  validateListing,
   wrapAsync(async (req, res) => {
     let { id } = req.params;
-    if (!req.body.listing) {
-      next(new ExpressError(400, "Send valid data to create a listing"));
-    }
+
     const listing = req.body.listing;
     console.log(listing);
     await Listing.findByIdAndUpdate(id, { ...listing });
