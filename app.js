@@ -162,7 +162,7 @@ app.get(
   "/listings/:id",
   wrapAsync(async (req, res) => {
     let { id } = req.params;
-    let listing = await Listing.findById(id);
+    let listing = await Listing.findById(id).populate("reviews");
     res.render("listings/show.ejs", { listing });
   })
 );
@@ -183,7 +183,7 @@ app.post(
     await newReview.save();
     await listing.save();
     console.log("review was added");
-    res.send("Review was added");
+    res.redirect(`/listings/${id}`);
   })
 );
 

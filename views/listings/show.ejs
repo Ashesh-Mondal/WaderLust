@@ -4,7 +4,7 @@
   <div class="col-8 offset-2">
     <h3 class="heading offset-2"><%= listing.title %></h3>
 
-    <div class="card col-7 offset-2">
+    <div class="card col-7 offset-2 listing-card">
       <img
         src="<%= listing.image %>"
         class="card-img-top show-img"
@@ -62,4 +62,17 @@
     </div>
     <button class="btn btn-outline-dark">Submit</button>
   </form>
+  <hr />
+  <p><b>All Reviews</b></p>
+  <div class="row">
+    <% for(let review of listing.reviews){ %>
+    <div class="card col-5 ms-3 mb-3">
+      <div class="card-body">
+        <h5 class="card-title">Jone Doe</h5>
+        <p class="card-text"><%= review.comment %></p>
+        <p class="card-text"><%= review.rating %>/5 stars</p>
+      </div>
+    </div>
+    <% } %>
+  </div>
 </div>
