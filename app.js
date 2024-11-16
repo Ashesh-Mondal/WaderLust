@@ -167,8 +167,8 @@ app.get(
   })
 );
 
-// Review
-// Post Route
+// Review -------------------------------------------------------------------------
+// Post Review Route
 
 app.post(
   "/listings/:id/reviews",
@@ -183,6 +183,19 @@ app.post(
     await newReview.save();
     await listing.save();
     console.log("review was added");
+    res.redirect(`/listings/${id}`);
+  })
+);
+
+// Post Delete Route
+
+app.delete(
+  "/listings/:id/reviews/:reviewId",
+  wrapAsync(async (req, res) => {
+    let { id, reviewId } = req.params;
+    await Listing.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+    let deletedReview = await Review.findByIdAndDelete(reviewId);
+    console.log(deletedReview);
     res.redirect(`/listings/${id}`);
   })
 );
