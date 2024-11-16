@@ -187,7 +187,7 @@ app.post(
   })
 );
 
-// Post Delete Route
+// Delete Review Route
 
 app.delete(
   "/listings/:id/reviews/:reviewId",
