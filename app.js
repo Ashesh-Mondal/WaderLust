@@ -27,6 +27,11 @@ const sessionOptions = {
   secret: "supersecretcode",
   resave: false,
   saveUninitialized: true,
+  cookie: {
+    expires: Date.now() + 7 * 24 * 60 * 60 * 1000,
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+    httpOnly: true, // httpOnly is the key used to prevent cross-scripting attacks
+  },
 };
 
 app.use(session(sessionOptions));
