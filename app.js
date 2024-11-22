@@ -44,8 +44,8 @@ app.use(flash());
 // Passport should always be used after session middleware so that the user can be stored or remembered by the browser
 app.use(passport.initialize());
 app.use(passport.session());
-
 passport.use(new LocalStrategy(User.authenticate()));
+
 passport.serializeUser(User.serializeUser()); // Used to save the creadentials of a user for a complete session
 passport.deserializeUser(User.deserializeUser()); // Used to delete the creadentials of a user after the session is completed
 
@@ -75,6 +75,16 @@ app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");
   next();
+});
+
+app.get("/demouser", async (req, res) => {
+  const fakeUser = new User({
+    email: "student@gmail.com",
+    username: "delta-student",
+  });
+
+  let registeredUser = await User.register(fakeUser, "helloworld");
+  res.send(registeredUser);
 });
 
 app.use("/listings", listings);
