@@ -8,6 +8,9 @@ const ejsMate = require("ejs-mate");
 const ExpressError = require("./utils/ExpressError.js");
 const session = require("express-session");
 const flash = require("connect-flash");
+const User = require("./models/user.js");
+const passport = require("passport");
+const LocalStrategy = require("passport-local");
 
 const listings = require("./routes/listing.js");
 const reviews = require("./routes/review.js");
@@ -37,6 +40,14 @@ const sessionOptions = {
 
 app.use(session(sessionOptions));
 app.use(flash());
+
+// Passport should always be used after session middleware so that the user can be stored or remembered by the browser
+app.use(passport.initialize());
+app.use(passport.session());
+
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser()); // Used to save the creadentials of a user for a complete session
+passport.deserializeUser(User.deserializeUser()); // Used to delete the creadentials of a user after the session is completed
 
 const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
 
