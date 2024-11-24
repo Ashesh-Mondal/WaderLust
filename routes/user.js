@@ -19,6 +19,7 @@ router.post(
       const registeredUser = await User.register(newUser, password); // Used to save data in DB and hash password
       console.log(registeredUser);
       req.flash("success", "Welcome to Wanderlust!");
+      console.log(req.user);
       res.redirect("/listings");
     } catch (e) {
       console.log(e);
