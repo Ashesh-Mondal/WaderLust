@@ -47,6 +47,27 @@ router.post(
   })
 );
 
+// SHOW ROUTE
+
+router.get(
+  "/:id",
+  wrapAsync(async (req, res) => {
+    let { id } = req.params;
+    let listing = await Listing.findById(id)
+      .populate({ path: "reviews", populate: { path: "author" } }) // Populating author for each review using nested populate
+      .populate("owner");
+    if (!listing) {
+      req.flash(
+        "error",
+        "The listing you are trying to access does not exists"
+      );
+      res.redirect("/listings");
+    }
+    console.log(listing);
+    res.render("listings/show.ejs", { listing });
+  })
+);
+
 // EDIT ROUTE
 
 router.get(
@@ -97,27 +118,6 @@ router.delete(
     console.log(deletedListing);
     req.flash("success", "Listing Deleted!");
     res.redirect("/listings");
-  })
-);
-
-// SHOW ROUTE
-
-router.get(
-  "/:id",
-  wrapAsync(async (req, res) => {
-    let { id } = req.params;
-    let listing = await Listing.findById(id)
-      .populate({ path: "reviews", populate: { path: "author" } }) // Populating author for each review using nested populate
-      .populate("owner");
-    if (!listing) {
-      req.flash(
-        "error",
-        "The listing you are trying to access does not exists"
-      );
-      res.redirect("/listings");
-    }
-    console.log(listing);
-    res.render("listings/show.ejs", { listing });
   })
 );
 
