@@ -107,7 +107,7 @@ router.get(
   wrapAsync(async (req, res) => {
     let { id } = req.params;
     let listing = await Listing.findById(id)
-      .populate("reviews")
+      .populate({ path: "reviews", populate: { path: "author" } }) // Populating author for each review using nested populate
       .populate("owner");
     if (!listing) {
       req.flash(
