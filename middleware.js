@@ -1,4 +1,6 @@
 const Listing = require("./models/listing");
+const ExpressError = require("./utils/ExpressError");
+const { listingSchema, reviewSchema } = require("./schema");
 
 module.exports.isLoggedIn = (req, res, next) => {
   console.log(req.user);
@@ -31,4 +33,24 @@ module.exports.isOwner = async (req, res, next) => {
     return res.redirect(`/listings/${id}`);
   }
   next();
+};
+
+module.exports.validateListing = (req, res, next) => {
+  let { error } = listingSchema.validate(req.body);
+  if (error) {
+    let errMsg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(400, errMsg);
+  } else {
+    next();
+  }
+};
+
+module.exports.validateReview = (req, res, next) => {
+  let { error } = reviewSchema.validate(req.body);
+  if (error) {
+    let errMsg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(400, errMsg);
+  } else {
+    next();
+  }
 };
