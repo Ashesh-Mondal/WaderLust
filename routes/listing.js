@@ -5,15 +5,21 @@ const { isLoggedIn, isOwner, validateListing } = require("../middleware.js");
 
 const listingController = require("../controllers/listing");
 
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
+
 // INDEX ROUTE && CREATE ROUTE
 router
   .route("/")
   .get(wrapAsync(listingController.index))
-  .post(
-    isLoggedIn,
-    validateListing,
-    wrapAsync(listingController.createListing)
-  );
+  // .post(
+  //   isLoggedIn,
+  //   validateListing,
+  //   wrapAsync(listingController.createListing)
+  // );
+  .post(upload.single("listing[image]"), (req, res) => {
+    res.send(req.file);
+  });
 
 // NEW ROUTE
 router.get("/new", isLoggedIn, listingController.renderNewForm);
