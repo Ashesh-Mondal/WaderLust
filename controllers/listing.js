@@ -52,7 +52,11 @@ module.exports.renderEditForm = async (req, res) => {
     req.flash("error", "The listing you are trying to access does not exists");
     res.redirect("/listings");
   }
-  res.render("listings/edit.ejs", { listing });
+
+  let originalImageUrl = listing.image.url; // Accessing image
+  originalImageUrl = originalImageUrl.replace("/upload", "/upload/h_300,w_200");
+
+  res.render("listings/edit.ejs", { listing, originalImageUrl });
 };
 
 module.exports.updateListing = async (req, res) => {
