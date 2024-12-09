@@ -72,9 +72,9 @@ app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
 
-app.get("/", (req, res) => {
-  res.send("Hi! I am Root");
-});
+// app.get("/", (req, res) => {
+//   res.send("Hi! I am Root");
+// });
 
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
